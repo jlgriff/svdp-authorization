@@ -1,4 +1,4 @@
-import { Role } from '../interface/role.js';
+import { Role } from '../interfaces/role.js';
 /**
  * Encodes a list of user roles into a single shortened string to better fit in JWT tokens
  *

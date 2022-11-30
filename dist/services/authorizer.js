@@ -1,14 +1,4 @@
-import { AccessLevel, OrganizationType } from '../interface/role.js';
-const accessLevelMappings = [
-    { access: AccessLevel.READER, tokenCode: new Uint8Array([10]), label: AccessLevel.READER.toString() },
-    { access: AccessLevel.CONTRIBUTOR, tokenCode: new Uint8Array([20]), label: AccessLevel.CONTRIBUTOR.toString() },
-    { access: AccessLevel.APPROVER, tokenCode: new Uint8Array([30]), label: AccessLevel.APPROVER.toString() },
-    { access: AccessLevel.ADMINISTRATOR, tokenCode: new Uint8Array([100]), label: AccessLevel.ADMINISTRATOR.toString() },
-];
-const organizationTypeMappings = [
-    { type: OrganizationType.CONFERENCE, tokenCode: new Uint8Array([10]), label: OrganizationType.CONFERENCE.toString() },
-    { type: OrganizationType.COUNCIL, tokenCode: new Uint8Array([20]), label: OrganizationType.COUNCIL.toString() },
-];
+import { ACCESS_LEVEL_MAPPINGS, ORGANIZATION_TYPE_MAPPINGS, } from '../constants/role.js';
 /**
  * Encodes the organization type enum into a single byte
  *
@@ -16,7 +6,7 @@ const organizationTypeMappings = [
  * @returns a single byte representing the organization type
  */
 const encodeOrganizationType = (organizationType) => {
-    const organizationTypeCodes = organizationTypeMappings
+    const organizationTypeCodes = ORGANIZATION_TYPE_MAPPINGS
         .filter((mapping) => mapping.label.toLowerCase() === organizationType.toLowerCase())
         .map((mapping) => mapping.tokenCode);
     return organizationTypeCodes[0] || new Uint8Array([0]);
@@ -28,7 +18,7 @@ const encodeOrganizationType = (organizationType) => {
  * @returns an OrganizationType enum
  */
 const decodeOrganizationType = (tokenCode) => {
-    const organizationTypes = organizationTypeMappings
+    const organizationTypes = ORGANIZATION_TYPE_MAPPINGS
         .filter((mapping) => mapping.tokenCode[0] === tokenCode[0])
         .map((mapping) => mapping.type);
     return organizationTypes[0] || null;
@@ -40,7 +30,7 @@ const decodeOrganizationType = (tokenCode) => {
  * @returns a single byte representing the access level
  */
 const encodeAccessLevel = (accessLevel) => {
-    const roleTokenCodes = accessLevelMappings
+    const roleTokenCodes = ACCESS_LEVEL_MAPPINGS
         .filter((mapping) => mapping.label.toLowerCase() === accessLevel.toLowerCase())
         .map((mapping) => mapping.tokenCode);
     return roleTokenCodes[0] || new Uint8Array([0]);
@@ -52,7 +42,7 @@ const encodeAccessLevel = (accessLevel) => {
  * @returns an AccessLevel enum
  */
 const decodeAccessLevel = (tokenCode) => {
-    const accessLevels = accessLevelMappings
+    const accessLevels = ACCESS_LEVEL_MAPPINGS
         .filter((mapping) => mapping.tokenCode[0] === tokenCode[0])
         .map((mapping) => mapping.access);
     return accessLevels[0] || null;

@@ -1,2 +1,3 @@
-export { encodeRoles, decodeRoles } from './service/authorizer.js';
-export { AccessLevel, OrganizationType, Role } from './interface/role.js';
+export { AccessLevel, OrganizationType } from './constants/role.js';
+export { encodeRoles, decodeRoles } from './services/authorizer.js';
+export { Role } from './interfaces/role.js';

@@ -1,4 +1,4 @@
-import { AccessLevel, OrganizationType } from './role.js';
+import { OrganizationType, AccessLevel } from '../constants/role.js';
 export interface OrganizationTypeEncoding {
     type: OrganizationType;
     tokenCode: Uint8Array;

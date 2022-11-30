@@ -1,5 +1,6 @@
-import { encodeRoles, decodeRoles } from '../index.js';
-import { Role, OrganizationType, AccessLevel } from '../interface/role.js';
+import {
+  encodeRoles, decodeRoles, OrganizationType, AccessLevel, Role,
+} from '../index.js';
 
 process.env.NODE_ENV = 'test';
 

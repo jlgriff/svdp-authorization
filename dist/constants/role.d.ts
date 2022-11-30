@@ -1,3 +1,4 @@
+import { AccessLevelEncoding, OrganizationTypeEncoding } from '../interfaces/encoding.js';
 export declare enum AccessLevel {
     READER = "reader",
     CONTRIBUTOR = "contributor",
@@ -8,9 +9,5 @@ export declare enum OrganizationType {
     CONFERENCE = "conference",
     COUNCIL = "council"
 }
-export interface Role {
-    userId: string;
-    organizationId: number;
-    organizationType: OrganizationType;
-    access: AccessLevel;
-}
+export declare const ACCESS_LEVEL_MAPPINGS: AccessLevelEncoding[];
+export declare const ORGANIZATION_TYPE_MAPPINGS: OrganizationTypeEncoding[];

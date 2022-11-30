@@ -1,5 +1,4 @@
-import { encodeRoles, decodeRoles } from '../index.js';
-import { OrganizationType, AccessLevel } from '../interface/role.js';
+import { encodeRoles, decodeRoles, OrganizationType, AccessLevel, } from '../index.js';
 process.env.NODE_ENV = 'test';
 describe('Verify encodeRoles and decodeRoles', () => {
     test('A list of roles should be the same value after being encoded and decoded', () => {
