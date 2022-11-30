@@ -34,7 +34,7 @@ const encodeOrganizationType = (organizationType: OrganizationType): Uint8Array 
  */
 const decodeOrganizationType = (tokenCode: Uint8Array): OrganizationType | null => {
   const organizationTypes = organizationTypeMappings
-    .filter((mapping) => mapping.tokenCode === tokenCode)
+    .filter((mapping) => mapping.tokenCode[0] === tokenCode[0])
     .map((mapping) => mapping.type);
   return organizationTypes[0] || null;
 };
@@ -60,7 +60,7 @@ const encodeAccessLevel = (accessLevel: AccessLevel): Uint8Array => {
  */
 const decodeAccessLevel = (tokenCode: Uint8Array): AccessLevel | null => {
   const accessLevels = accessLevelMappings
-    .filter((mapping) => mapping.tokenCode === tokenCode)
+    .filter((mapping) => mapping.tokenCode[0] === tokenCode[0])
     .map((mapping) => mapping.access);
   return accessLevels[0] || null;
 };
@@ -95,10 +95,10 @@ export const decodeRoles = (encodedRoleString: string, userId: string): Role[] =
     const encodedValues: string[] = encodedRole.split(':');
     try {
       const organizationTypeCode: number = Number(encodedValues[0]);
-      const organizationType: OrganizationType | null = decodeOrganizationType(new Uint8Array(organizationTypeCode));
+      const organizationType: OrganizationType | null = decodeOrganizationType(Uint8Array.from([organizationTypeCode]));
       const organizationId: number = Number(encodedValues[1]);
       const AccessLevelCode: number = Number(encodedValues[2]);
-      const access: AccessLevel | null = decodeAccessLevel(new Uint8Array(AccessLevelCode));
+      const access: AccessLevel | null = decodeAccessLevel(Uint8Array.from([AccessLevelCode]));
       if (organizationType && access) {
         roles.push({
           organizationType, organizationId, userId, access,
