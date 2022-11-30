@@ -2,7 +2,7 @@
   "name": "svdp-authorization",
   "version": "1.0.0",
   "author": "John Griffith",
-  "description": "A library to implement authorization logic within the ecosystem of svdp microservices",
+  "description": "A library containing the authorization logic of microservices in the svdp ecosystem",
   "keywords": [
     "authorization",
     "typescript",

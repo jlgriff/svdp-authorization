@@ -15,7 +15,7 @@
     "@typescript-eslint"
   ],
   "rules": {
-    "no-console": "off",
+    "no-shadow": "off",
     "import/extensions": [
       2,
       "always"
