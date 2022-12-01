@@ -23,3 +23,11 @@ Alternatively, pull the code from a specific commit hash:
 ```
 
 # Authorization
+
+Use the `isAuthorized` function to determine if the user is authorized to do an action within a given organization.
+
+To correctly populate the `accessChecks` parameter, use the exported `has<AccessLevel>Access` functions corresponding to whichever access levels should be authorized. For example, if only an organization's APPROVERS and ADMINISTRATORS are authorized to do an action, use the following `isAuthorized` check:
+```
+isAuthorized([hasApproverAccess, hasAdministratorAccess], organizationId, organizationType, userRoles);
+```
+

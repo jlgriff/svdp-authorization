@@ -98,19 +98,19 @@ export const decodeRoles = (encodedRoleString, userId) => {
  * @param accessChecks - array of access-level checks that will authorize the user if *any* return true
  * @param organizationId - id of the organization to check for user's access
  * @param organizationType - type of organization to check for user's access
- * @param roles - user's roles from their JWT token
+ * @param userRoles - user's roles from their JWT token
  * @returns whether the user is authorized
  */
-export const isAuthorized = (accessChecks, organizationId, organizationType, roles) => accessChecks.some((fn) => fn(organizationId, organizationType, roles) === true);
+export const isAuthorized = (accessChecks, organizationId, organizationType, userRoles) => accessChecks.some((fn) => fn(organizationId, organizationType, userRoles) === true);
 /**
  * Determines whether the user has reader access in the given organization
  *
  * @param organizationId - id of the organization to check for user's access
  * @param organizationType - type of organization to check for user's access
- * @param roles - user's roles from their JWT token
+ * @param userRoles - user's roles from their JWT token
  * @returns whether the user has reader access in the given organization
  */
-export const hasReaderAccess = (organizationId, organizationType, roles) => roles
+export const hasReaderAccess = (organizationId, organizationType, userRoles) => userRoles
     .filter((role) => role.organizationId === organizationId
     && role.organizationType === organizationType
     && role.access === AccessLevel.READER)
@@ -120,10 +120,10 @@ export const hasReaderAccess = (organizationId, organizationType, roles) => role
 *
 * @param organizationId - id of the organization to check for user's access
 * @param organizationType - type of organization to check for user's access
-* @param roles - user's roles from their JWT token
+* @param userRoles - user's roles from their JWT token
 * @returns whether the user has contributor access in the given organization
 */
-export const hasContributorAccess = (organizationId, organizationType, roles) => roles
+export const hasContributorAccess = (organizationId, organizationType, userRoles) => userRoles
     .filter((role) => role.organizationId === organizationId
     && role.organizationType === organizationType
     && role.access === AccessLevel.CONTRIBUTOR)
@@ -133,10 +133,10 @@ export const hasContributorAccess = (organizationId, organizationType, roles) =>
 *
 * @param organizationId - id of the organization to check for user's access
 * @param organizationType - type of organization to check for user's access
-* @param roles - user's roles from their JWT token
+* @param userRoles - user's roles from their JWT token
 * @returns whether the user has approver access in the given organization
 */
-export const hasApproverAccess = (organizationId, organizationType, roles) => roles
+export const hasApproverAccess = (organizationId, organizationType, userRoles) => userRoles
     .filter((role) => role.organizationId === organizationId
     && role.organizationType === organizationType
     && role.access === AccessLevel.APPROVER)
@@ -146,10 +146,10 @@ export const hasApproverAccess = (organizationId, organizationType, roles) => ro
 *
 * @param organizationId - id of the organization to check for user's access
 * @param organizationType - type of organization to check for user's access
-* @param roles - user's roles from their JWT token
+* @param userRoles - user's roles from their JWT token
 * @returns whether the user has administrator access in the given organization
 */
-export const hasAdministratorAccess = (organizationId, organizationType, roles) => roles
+export const hasAdministratorAccess = (organizationId, organizationType, userRoles) => userRoles
     .filter((role) => role.organizationId === organizationId
     && role.organizationType === organizationType
     && role.access === AccessLevel.ADMINISTRATOR)
@@ -159,10 +159,10 @@ export const hasAdministratorAccess = (organizationId, organizationType, roles) 
 *
 * @param organizationId - id of the organization to check for user's access
 * @param organizationType - type of organization to check for user's access
-* @param roles - user's roles from their JWT token
+* @param userRoles - user's roles from their JWT token
 * @returns whether the user has system access in the given organization
 */
-export const hasSystemAccess = (organizationId, organizationType, roles) => roles
+export const hasSystemAccess = (organizationId, organizationType, userRoles) => userRoles
     .filter((role) => role.organizationId === organizationId
     && role.organizationType === organizationType
     && role.access === AccessLevel.SYSTEM)
@@ -172,10 +172,10 @@ export const hasSystemAccess = (organizationId, organizationType, roles) => role
 *
 * @param organizationId - id of the organization to check for user's access
 * @param organizationType - type of organization to check for user's access
-* @param roles - user's roles from their JWT token
+* @param userRoles - user's roles from their JWT token
 * @returns whether the user has system administrator access in the given organization
 */
-export const hasSystemAdministratorAccess = (organizationId, organizationType, roles) => roles
+export const hasSystemAdministratorAccess = (organizationId, organizationType, userRoles) => userRoles
     .filter((role) => role.organizationId === organizationId
     && role.organizationType === organizationType
     && role.access === AccessLevel.SYSTEM_ADMINISTRATOR)
