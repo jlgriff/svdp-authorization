@@ -100,3 +100,87 @@ export const decodeRoles = (encodedRoleString: string, userId: string): Role[] =
   });
   return roles;
 };
+
+/**
+ * Determines whether the user has reader access in the given organization
+ *
+ * @param organizationId - id of the organization to check for user's access
+ * @param organizationType - type of organization to check for user's access
+ * @param roles - user's roles from their JWT token
+ * @returns whether the user has reader access in the given organization
+ */
+export const hasReaderRole = (organizationId: number, organizationType: OrganizationType, roles: Role[]): boolean => roles
+  .filter((role) => role.organizationId === organizationId
+    && role.organizationType === organizationType
+    && role.access === AccessLevel.READER)
+  .length > 0;
+
+/**
+* Determines whether the user has contributor access in the given organization
+*
+* @param organizationId - id of the organization to check for user's access
+* @param organizationType - type of organization to check for user's access
+* @param roles - user's roles from their JWT token
+* @returns whether the user has contributor access in the given organization
+*/
+export const hasContributorRole = (organizationId: number, organizationType: OrganizationType, roles: Role[]): boolean => roles
+  .filter((role) => role.organizationId === organizationId
+    && role.organizationType === organizationType
+    && role.access === AccessLevel.CONTRIBUTOR)
+  .length > 0;
+
+/**
+* Determines whether the user has approver access in the given organization
+*
+* @param organizationId - id of the organization to check for user's access
+* @param organizationType - type of organization to check for user's access
+* @param roles - user's roles from their JWT token
+* @returns whether the user has approver access in the given organization
+*/
+export const hasApproverRole = (organizationId: number, organizationType: OrganizationType, roles: Role[]): boolean => roles
+  .filter((role) => role.organizationId === organizationId
+    && role.organizationType === organizationType
+    && role.access === AccessLevel.APPROVER)
+  .length > 0;
+
+/**
+* Determines whether the user has administrator access in the given organization
+*
+* @param organizationId - id of the organization to check for user's access
+* @param organizationType - type of organization to check for user's access
+* @param roles - user's roles from their JWT token
+* @returns whether the user has administrator access in the given organization
+*/
+export const hasAdministratorRole = (organizationId: number, organizationType: OrganizationType, roles: Role[]): boolean => roles
+  .filter((role) => role.organizationId === organizationId
+    && role.organizationType === organizationType
+    && role.access === AccessLevel.ADMINISTRATOR)
+  .length > 0;
+
+/**
+* Determines whether the user has system access in the given organization
+*
+* @param organizationId - id of the organization to check for user's access
+* @param organizationType - type of organization to check for user's access
+* @param roles - user's roles from their JWT token
+* @returns whether the user has system access in the given organization
+*/
+export const hasSystemRole = (organizationId: number, organizationType: OrganizationType, roles: Role[]): boolean => roles
+  .filter((role) => role.organizationId === organizationId
+    && role.organizationType === organizationType
+    && role.access === AccessLevel.SYSTEM)
+  .length > 0;
+
+/**
+* Determines whether the user has system administrator access in the given organization
+*
+* @param organizationId - id of the organization to check for user's access
+* @param organizationType - type of organization to check for user's access
+* @param roles - user's roles from their JWT token
+* @returns whether the user has system administrator access in the given organization
+*/
+export const hasSystemAdministratorRole = (organizationId: number, organizationType: OrganizationType, roles: Role[]): boolean => roles
+  .filter((role) => role.organizationId === organizationId
+    && role.organizationType === organizationType
+    && role.access === AccessLevel.SYSTEM_ADMINISTRATOR)
+  .length > 0;

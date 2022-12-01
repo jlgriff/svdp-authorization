@@ -3,7 +3,9 @@ export declare enum AccessLevel {
     READER = "reader",
     CONTRIBUTOR = "contributor",
     APPROVER = "approver",
-    ADMINISTRATOR = "administrator"
+    ADMINISTRATOR = "administrator",
+    SYSTEM = "system",
+    SYSTEM_ADMINISTRATOR = "system_administrator"
 }
 export declare enum OrganizationType {
     CONFERENCE = "conference",
