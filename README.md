@@ -10,7 +10,9 @@ This module contains the authorization logic that is used within the ecosystem o
 
 # Installation
 
-This repo can be used as a dependency by pulling it from from the [public GitHub repository](https://github.com/jlgriff/svdp-authorization). To do this, the following can be added to the `dependencies` block in the project's `package.json`:
+This repo can be used as a dependency by pulling it from from the [private GitHub repository](https://github.com/jlgriff/svdp-authorization). The user must have access to the private repository before adding it as a dependency.
+
+To do this, the following can be added to the `dependencies` block in the project's `package.json`:
 
 ```
 "svdp-authorization": "git+ssh://git@github.com:jlgriff/svdp-authorization.git#main"
