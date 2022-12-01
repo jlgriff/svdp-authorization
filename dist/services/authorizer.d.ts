@@ -16,6 +16,16 @@ export declare const encodeRoles: (roles: Role[]) => string;
  */
 export declare const decodeRoles: (encodedRoleString: string, userId: string) => Role[];
 /**
+ * Determines if any of the user's roles in a particular organization are authorized
+ *
+ * @param accessChecks - array of access-level checks that will authorize the user if *any* return true
+ * @param organizationId - id of the organization to check for user's access
+ * @param organizationType - type of organization to check for user's access
+ * @param roles - user's roles from their JWT token
+ * @returns whether the user is authorized
+ */
+export declare const isAuthorized: (accessChecks: ((organizationId: number, organizationType: OrganizationType, roles: Role[]) => boolean)[], organizationId: number, organizationType: OrganizationType, roles: Role[]) => boolean;
+/**
  * Determines whether the user has reader access in the given organization
  *
  * @param organizationId - id of the organization to check for user's access
@@ -23,7 +33,7 @@ export declare const decodeRoles: (encodedRoleString: string, userId: string) =>
  * @param roles - user's roles from their JWT token
  * @returns whether the user has reader access in the given organization
  */
-export declare const hasReaderRole: (organizationId: number, organizationType: OrganizationType, roles: Role[]) => boolean;
+export declare const hasReaderAccess: (organizationId: number, organizationType: OrganizationType, roles: Role[]) => boolean;
 /**
 * Determines whether the user has contributor access in the given organization
 *
@@ -32,7 +42,7 @@ export declare const hasReaderRole: (organizationId: number, organizationType: O
 * @param roles - user's roles from their JWT token
 * @returns whether the user has contributor access in the given organization
 */
-export declare const hasContributorRole: (organizationId: number, organizationType: OrganizationType, roles: Role[]) => boolean;
+export declare const hasContributorAccess: (organizationId: number, organizationType: OrganizationType, roles: Role[]) => boolean;
 /**
 * Determines whether the user has approver access in the given organization
 *
@@ -41,7 +51,7 @@ export declare const hasContributorRole: (organizationId: number, organizationTy
 * @param roles - user's roles from their JWT token
 * @returns whether the user has approver access in the given organization
 */
-export declare const hasApproverRole: (organizationId: number, organizationType: OrganizationType, roles: Role[]) => boolean;
+export declare const hasApproverAccess: (organizationId: number, organizationType: OrganizationType, roles: Role[]) => boolean;
 /**
 * Determines whether the user has administrator access in the given organization
 *
@@ -50,7 +60,7 @@ export declare const hasApproverRole: (organizationId: number, organizationType:
 * @param roles - user's roles from their JWT token
 * @returns whether the user has administrator access in the given organization
 */
-export declare const hasAdministratorRole: (organizationId: number, organizationType: OrganizationType, roles: Role[]) => boolean;
+export declare const hasAdministratorAccess: (organizationId: number, organizationType: OrganizationType, roles: Role[]) => boolean;
 /**
 * Determines whether the user has system access in the given organization
 *
@@ -59,7 +69,7 @@ export declare const hasAdministratorRole: (organizationId: number, organization
 * @param roles - user's roles from their JWT token
 * @returns whether the user has system access in the given organization
 */
-export declare const hasSystemRole: (organizationId: number, organizationType: OrganizationType, roles: Role[]) => boolean;
+export declare const hasSystemAccess: (organizationId: number, organizationType: OrganizationType, roles: Role[]) => boolean;
 /**
 * Determines whether the user has system administrator access in the given organization
 *
@@ -68,4 +78,4 @@ export declare const hasSystemRole: (organizationId: number, organizationType: O
 * @param roles - user's roles from their JWT token
 * @returns whether the user has system administrator access in the given organization
 */
-export declare const hasSystemAdministratorRole: (organizationId: number, organizationType: OrganizationType, roles: Role[]) => boolean;
+export declare const hasSystemAdministratorAccess: (organizationId: number, organizationType: OrganizationType, roles: Role[]) => boolean;

@@ -1,6 +1,7 @@
+/* eslint-disable max-len */
 /* eslint-disable object-curly-newline */
 import { ACCESS_LEVEL_MAPPINGS, ORGANIZATION_TYPE_MAPPINGS } from '../constants/role.js';
-import { encodeRoles, decodeRoles, OrganizationType, AccessLevel, hasReaderRole, hasContributorRole, hasApproverRole, hasAdministratorRole, hasSystemRole, hasSystemAdministratorRole, } from '../index.js';
+import { encodeRoles, decodeRoles, OrganizationType, AccessLevel, hasReaderAccess, hasContributorAccess, hasApproverAccess, hasAdministratorAccess, hasSystemAccess, hasSystemAdministratorAccess, isAuthorized } from '../index.js';
 process.env.NODE_ENV = 'test';
 describe('Verify encodeRoles and decodeRoles', () => {
     test('A list of roles should be the same value after being encoded and decoded', () => {
@@ -71,64 +72,78 @@ const testAuthorizationFunction = (fn, matchingAccess, nonMatchingAccess, matchi
         expect(fn(matchingOrgId, matchingOrgType, roles)).toEqual(false);
     });
 };
-describe('Verify hasReaderRole', () => {
-    const fn = hasReaderRole;
+describe('Verify isAuthorized', () => {
+    const organizationId = 1;
+    const organizationType = OrganizationType.CONFERENCE;
+    const access = AccessLevel.READER;
+    const roles = [{ userId: 'test_user_id', organizationId, organizationType, access }];
+    test('The user should be authorized if one of the required access-level functions returns true', () => {
+        const authorized = isAuthorized([hasReaderAccess], organizationId, organizationType, roles);
+        expect(authorized).toEqual(true);
+    });
+    test('The user should not be authorized if none of the required access-level functions returns true', () => {
+        const authorized = isAuthorized([hasContributorAccess], organizationId, organizationType, roles);
+        expect(authorized).toEqual(false);
+    });
+});
+describe('Verify hasReaderAccess', () => {
+    const fn = hasReaderAccess;
     const matchingAccess = AccessLevel.READER;
     const nonMatchingAccess = AccessLevel.CONTRIBUTOR;
     const matchingOrgType = OrganizationType.CONFERENCE;
     const nonMatchingOrgType = OrganizationType.COUNCIL;
     testAuthorizationFunction(fn, matchingAccess, nonMatchingAccess, matchingOrgType, nonMatchingOrgType);
 });
-describe('Verify hasContributorRole', () => {
-    const fn = hasContributorRole;
+describe('Verify hasContributorAccess', () => {
+    const fn = hasContributorAccess;
     const matchingAccess = AccessLevel.CONTRIBUTOR;
     const nonMatchingAccess = AccessLevel.READER;
     const matchingOrgType = OrganizationType.CONFERENCE;
     const nonMatchingOrgType = OrganizationType.COUNCIL;
     testAuthorizationFunction(fn, matchingAccess, nonMatchingAccess, matchingOrgType, nonMatchingOrgType);
 });
-describe('Verify hasApproverRole', () => {
-    const fn = hasApproverRole;
+describe('Verify hasApproverAccess', () => {
+    const fn = hasApproverAccess;
     const matchingAccess = AccessLevel.APPROVER;
     const nonMatchingAccess = AccessLevel.READER;
     const matchingOrgType = OrganizationType.CONFERENCE;
     const nonMatchingOrgType = OrganizationType.COUNCIL;
     testAuthorizationFunction(fn, matchingAccess, nonMatchingAccess, matchingOrgType, nonMatchingOrgType);
 });
-describe('Verify hasAdministratorRole', () => {
-    const fn = hasAdministratorRole;
+describe('Verify hasAdministratorAccess', () => {
+    const fn = hasAdministratorAccess;
     const matchingAccess = AccessLevel.ADMINISTRATOR;
     const nonMatchingAccess = AccessLevel.READER;
     const matchingOrgType = OrganizationType.CONFERENCE;
     const nonMatchingOrgType = OrganizationType.COUNCIL;
     testAuthorizationFunction(fn, matchingAccess, nonMatchingAccess, matchingOrgType, nonMatchingOrgType);
 });
-describe('Verify hasContributorRole', () => {
-    const fn = hasContributorRole;
+describe('Verify hasContributorAccess', () => {
+    const fn = hasContributorAccess;
     const matchingAccess = AccessLevel.CONTRIBUTOR;
     const nonMatchingAccess = AccessLevel.READER;
     const matchingOrgType = OrganizationType.CONFERENCE;
     const nonMatchingOrgType = OrganizationType.COUNCIL;
     testAuthorizationFunction(fn, matchingAccess, nonMatchingAccess, matchingOrgType, nonMatchingOrgType);
 });
-describe('Verify hasAdministratorRole', () => {
-    const fn = hasAdministratorRole;
+describe('Verify hasAdministratorAccess', () => {
+    const fn = hasAdministratorAccess;
     const matchingAccess = AccessLevel.ADMINISTRATOR;
     const nonMatchingAccess = AccessLevel.READER;
     const matchingOrgType = OrganizationType.CONFERENCE;
     const nonMatchingOrgType = OrganizationType.COUNCIL;
     testAuthorizationFunction(fn, matchingAccess, nonMatchingAccess, matchingOrgType, nonMatchingOrgType);
 });
-describe('Verify hasSystemRole', () => {
-    const fn = hasSystemRole;
+describe('Verify hasSystemAccess', () => {
+    const fn = hasSystemAccess;
     const matchingAccess = AccessLevel.SYSTEM;
     const nonMatchingAccess = AccessLevel.READER;
     const matchingOrgType = OrganizationType.CONFERENCE;
     const nonMatchingOrgType = OrganizationType.COUNCIL;
     testAuthorizationFunction(fn, matchingAccess, nonMatchingAccess, matchingOrgType, nonMatchingOrgType);
 });
-describe('Verify hasSystemAdministratorRole', () => {
-    const fn = hasSystemAdministratorRole;
+describe('Verify hasSystemAdministratorAccess', () => {
+    const fn = hasSystemAdministratorAccess;
     const matchingAccess = AccessLevel.SYSTEM_ADMINISTRATOR;
     const nonMatchingAccess = AccessLevel.READER;
     const matchingOrgType = OrganizationType.CONFERENCE;
