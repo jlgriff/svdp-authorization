@@ -24,3 +24,4 @@ export const ORGANIZATION_TYPE_MAPPINGS = [
     { type: OrganizationType.CONFERENCE, tokenCode: new Uint8Array([10]), label: OrganizationType.CONFERENCE.toString() },
     { type: OrganizationType.COUNCIL, tokenCode: new Uint8Array([20]), label: OrganizationType.COUNCIL.toString() },
 ];
+//# sourceMappingURL=role.js.map

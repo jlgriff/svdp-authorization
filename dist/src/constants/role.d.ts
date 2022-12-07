@@ -13,3 +13,4 @@ export declare enum OrganizationType {
 }
 export declare const ACCESS_LEVEL_MAPPINGS: AccessLevelEncoding[];
 export declare const ORGANIZATION_TYPE_MAPPINGS: OrganizationTypeEncoding[];
+//# sourceMappingURL=role.d.ts.map

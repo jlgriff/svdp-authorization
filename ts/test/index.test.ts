@@ -1,7 +1,9 @@
 /* eslint-disable max-len */
 /* eslint-disable object-curly-newline */
-import { ACCESS_LEVEL_MAPPINGS, ORGANIZATION_TYPE_MAPPINGS } from '../constants/role.js';
-import { encodeRoles, decodeRoles, OrganizationType, AccessLevel, Role, hasReaderAccess, hasContributorAccess, hasApproverAccess, hasAdministratorAccess, hasSystemAccess, hasSystemAdministratorAccess, isAuthorized } from '../index.js';
+import * as assert from 'assert/strict';
+import { test } from 'mocha';
+import { ACCESS_LEVEL_MAPPINGS, ORGANIZATION_TYPE_MAPPINGS } from '../src/constants/role.js';
+import { encodeRoles, decodeRoles, OrganizationType, AccessLevel, Role, hasReaderAccess, hasContributorAccess, hasApproverAccess, hasAdministratorAccess, hasSystemAccess, hasSystemAdministratorAccess, isAuthorized } from '../src/index.js';
 
 process.env.NODE_ENV = 'test';
 
@@ -20,33 +22,31 @@ describe('Verify encodeRoles and decodeRoles', () => {
     const encodedRoles: string = encodeRoles(roles);
     const decodedRoles: Role[] = decodeRoles(encodedRoles, userId);
 
-    expect(decodedRoles).toEqual(roles);
+    assert.deepEqual(decodedRoles, roles);
   });
 });
 
 describe('Verify ACCESS_LEVEL_MAPPINGS validity', () => {
   test('No access level token codes exceed 1 byte', () => {
-    expect(ACCESS_LEVEL_MAPPINGS.every((mapping) => mapping.tokenCode.byteLength === 1))
-      .toEqual(true);
+    assert.equal(ACCESS_LEVEL_MAPPINGS.every((mapping) => mapping.tokenCode.byteLength === 1), true);
   });
 
   test('No access level token codes are duplicated', () => {
     const tokenCodeNumbers: Set<number> = new Set();
     ACCESS_LEVEL_MAPPINGS.forEach((mapping) => tokenCodeNumbers.add(mapping.tokenCode[0]));
-    expect(tokenCodeNumbers.size).toEqual(ACCESS_LEVEL_MAPPINGS.length);
+    assert.equal(tokenCodeNumbers.size, ACCESS_LEVEL_MAPPINGS.length);
   });
 });
 
 describe('Verify ORGANIZATION_TYPE_MAPPINGS validity', () => {
   test('No organization type token codes exceed 1 byte', () => {
-    expect(ORGANIZATION_TYPE_MAPPINGS.every((mapping) => mapping.tokenCode.byteLength === 1))
-      .toEqual(true);
+    assert.equal(ORGANIZATION_TYPE_MAPPINGS.every((mapping) => mapping.tokenCode.byteLength === 1), true);
   });
 
   test('No organization type token codes are duplicated', () => {
     const tokenCodeNumbers: Set<number> = new Set();
     ORGANIZATION_TYPE_MAPPINGS.forEach((mapping) => tokenCodeNumbers.add(mapping.tokenCode[0]));
-    expect(tokenCodeNumbers.size).toEqual(ORGANIZATION_TYPE_MAPPINGS.length);
+    assert.equal(tokenCodeNumbers.size, ORGANIZATION_TYPE_MAPPINGS.length);
   });
 });
 
@@ -66,14 +66,14 @@ const testAuthorizationFunction = (
       { userId, organizationId: matchingOrgId, organizationType: matchingOrgType, access: matchingAccess },
       { userId, organizationId: matchingOrgId, organizationType: matchingOrgType, access: nonMatchingAccess },
     ];
-    expect(fn(matchingOrgId, matchingOrgType, roles)).toEqual(true);
+    assert.equal(fn(matchingOrgId, matchingOrgType, roles), true);
   });
 
   test(`A list of roles not containing a ${matchingAccess.toString()} in an organization should return false`, () => {
     const roles: Role[] = [
       { userId, organizationId: matchingOrgId, organizationType: matchingOrgType, access: nonMatchingAccess },
     ];
-    expect(fn(matchingOrgId, matchingOrgType, roles)).toEqual(false);
+    assert.equal(fn(matchingOrgId, matchingOrgType, roles), false);
   });
 
   test(`A list of roles only containing a ${matchingAccess.toString()} for a different organization type should return false`, () => {
@@ -81,7 +81,7 @@ const testAuthorizationFunction = (
       { userId, organizationId: matchingOrgId, organizationType: nonMatchingOrgType, access: matchingAccess },
       { userId, organizationId: matchingOrgId, organizationType: nonMatchingOrgType, access: nonMatchingAccess },
     ];
-    expect(fn(matchingOrgId, matchingOrgType, roles)).toEqual(false);
+    assert.equal(fn(matchingOrgId, matchingOrgType, roles), false);
   });
 
   test(`A list of roles only containing a ${matchingAccess.toString()} for a different organization should return false`, () => {
@@ -89,7 +89,7 @@ const testAuthorizationFunction = (
       { userId, organizationId: nonMatchingOrgId, organizationType: matchingOrgType, access: matchingAccess },
       { userId, organizationId: matchingOrgId, organizationType: matchingOrgType, access: nonMatchingAccess },
     ];
-    expect(fn(matchingOrgId, matchingOrgType, roles)).toEqual(false);
+    assert.equal(fn(matchingOrgId, matchingOrgType, roles), false);
   });
 };
 
@@ -101,12 +101,12 @@ describe('Verify isAuthorized', () => {
 
   test('The user should be authorized if one of the required access-level functions returns true', () => {
     const authorized = isAuthorized([hasReaderAccess], organizationId, organizationType, roles);
-    expect(authorized).toEqual(true);
+    assert.equal(authorized, true);
   });
 
   test('The user should not be authorized if none of the required access-level functions returns true', () => {
     const authorized = isAuthorized([hasContributorAccess], organizationId, organizationType, roles);
-    expect(authorized).toEqual(false);
+    assert.equal(authorized, false);
   });
 });
 

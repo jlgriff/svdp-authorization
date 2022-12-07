@@ -79,3 +79,4 @@ export declare const hasSystemAccess: (organizationId: number, organizationType:
 * @returns whether the user has system administrator access in the given organization
 */
 export declare const hasSystemAdministratorAccess: (organizationId: number, organizationType: OrganizationType, userRoles: Role[]) => boolean;
+//# sourceMappingURL=authorizer.d.ts.map

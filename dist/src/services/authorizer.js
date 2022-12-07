@@ -180,3 +180,4 @@ export const hasSystemAdministratorAccess = (organizationId, organizationType, u
     && role.organizationType === organizationType
     && role.access === AccessLevel.SYSTEM_ADMINISTRATOR)
     .length > 0;
+//# sourceMappingURL=authorizer.js.map

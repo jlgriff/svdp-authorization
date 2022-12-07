@@ -9,3 +9,4 @@ export interface AccessLevelEncoding {
     tokenCode: Uint8Array;
     label: string;
 }
+//# sourceMappingURL=encoding.d.ts.map

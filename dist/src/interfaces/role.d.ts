@@ -5,3 +5,4 @@ export interface Role {
     organizationType: OrganizationType;
     access: AccessLevel;
 }
+//# sourceMappingURL=role.d.ts.map
