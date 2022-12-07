@@ -19,7 +19,7 @@ describe('Verify encodeRoles and decodeRoles', () => {
       { userId, organizationId: organizationId2, organizationType: OrganizationType.COUNCIL, access: AccessLevel.READER },
     ];
 
-    const encodedRoles: string = encodeRoles(roles);
+    const encodedRoles: string[] = encodeRoles(roles);
     const decodedRoles: Role[] = decodeRoles(encodedRoles, userId);
 
     assert.deepEqual(decodedRoles, roles);

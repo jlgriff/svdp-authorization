@@ -53,24 +53,20 @@ const decodeAccessLevel = (tokenCode) => {
  * @param roles - list of a user's roles within his organizations
  * @returns an encoded string containing all of a user's roles within his organizations
  */
-export const encodeRoles = (roles) => {
-    const encodedRoles = roles.map((role) => {
-        const organizationType = encodeOrganizationType(role.organizationType);
-        const { organizationId } = role;
-        const accessLevel = encodeAccessLevel(role.access);
-        return `${organizationType}:${organizationId}:${accessLevel}`;
-    });
-    return encodedRoles.join('|');
-};
+export const encodeRoles = (roles) => roles.map((role) => {
+    const organizationType = encodeOrganizationType(role.organizationType);
+    const { organizationId } = role;
+    const accessLevel = encodeAccessLevel(role.access);
+    return `${organizationType}:${organizationId}:${accessLevel}`;
+});
 /**
  * Decodes a string from the JWT into a list of user roles
  *
- * @param encodedRoleString - encoded string that contains all of the user's roles within his organizations
+ * @param encodedRoles - encoded string that contains all of the user's roles within his organizations
  * @param userId - user's ID
  * @returns a list of a user's roles within his organizations
  */
-export const decodeRoles = (encodedRoleString, userId) => {
-    const encodedRoles = encodedRoleString.split('|');
+export const decodeRoles = (encodedRoles, userId) => {
     const roles = [];
     encodedRoles.forEach((encodedRole) => {
         const encodedValues = encodedRole.split(':');

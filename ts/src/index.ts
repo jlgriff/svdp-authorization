@@ -10,4 +10,4 @@ export {
   hasSystemAdministratorAccess,
   isAuthorized,
 } from './services/authorizer.js';
-export { Role } from './interfaces/role.js';
+export { Role } from './constants/role.js';

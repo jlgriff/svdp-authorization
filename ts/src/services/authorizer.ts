@@ -1,7 +1,6 @@
 import {
-  AccessLevel, ACCESS_LEVEL_MAPPINGS, OrganizationType, ORGANIZATION_TYPE_MAPPINGS,
+  Role, AccessLevel, ACCESS_LEVEL_MAPPINGS, OrganizationType, ORGANIZATION_TYPE_MAPPINGS,
 } from '../constants/role.js';
-import { Role } from '../interfaces/role.js';
 
 /**
  * Encodes the organization type enum into a single byte
@@ -61,25 +60,21 @@ const decodeAccessLevel = (tokenCode: Uint8Array): AccessLevel | null => {
  * @param roles - list of a user's roles within his organizations
  * @returns an encoded string containing all of a user's roles within his organizations
  */
-export const encodeRoles = (roles: Role[]): string => {
-  const encodedRoles = roles.map((role) => {
-    const organizationType = encodeOrganizationType(role.organizationType);
-    const { organizationId } = role;
-    const accessLevel = encodeAccessLevel(role.access);
-    return `${organizationType}:${organizationId}:${accessLevel}`;
-  });
-  return encodedRoles.join('|');
-};
+export const encodeRoles = (roles: Role[]): string[] => roles.map((role) => {
+  const organizationType = encodeOrganizationType(role.organizationType);
+  const { organizationId } = role;
+  const accessLevel = encodeAccessLevel(role.access);
+  return `${organizationType}:${organizationId}:${accessLevel}`;
+});
 
 /**
  * Decodes a string from the JWT into a list of user roles
  *
- * @param encodedRoleString - encoded string that contains all of the user's roles within his organizations
+ * @param encodedRoles - encoded string that contains all of the user's roles within his organizations
  * @param userId - user's ID
  * @returns a list of a user's roles within his organizations
  */
-export const decodeRoles = (encodedRoleString: string, userId: string): Role[] => {
-  const encodedRoles: string[] = encodedRoleString.split('|');
+export const decodeRoles = (encodedRoles: string[], userId: string): Role[] => {
   const roles: Role[] = [];
   encodedRoles.forEach((encodedRole) => {
     const encodedValues: string[] = encodedRole.split(':');
