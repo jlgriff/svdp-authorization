@@ -1,4 +1,4 @@
-export { AccessLevel, OrganizationType } from './constants/role.js';
+export { Role, AccessLevel, OrganizationType } from './constants/role.js';
 export {
   encodeRoles,
   decodeRoles,
@@ -10,4 +10,3 @@ export {
   hasSystemAdministratorAccess,
   isAuthorized,
 } from './services/authorizer.js';
-export { Role } from './constants/role.js';
