@@ -32,7 +32,7 @@
   "type": "module",
   "scripts": {
     "build": "npx tsc",
-    "test": "npm run build && npx mocha dist/test/*.js"
+    "test": "npm run build && NODE_ENV=test npx mocha 'dist/**/*.test.js'"
   },
   "dependencies": {},
   "devDependencies": {

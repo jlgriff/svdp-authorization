@@ -1,3 +1,4 @@
+export { getAccessLevelEnum, getOrganizationTypeEnum } from './utilities/enum-converter.js';
 export { Role, AccessLevel, OrganizationType } from './constants/role.js';
 export {
   encodeRoles,
@@ -9,4 +10,4 @@ export {
   hasSystemAccess,
   hasSystemAdministratorAccess,
   isAuthorized,
-} from './services/authorizer.js';
+} from './utilities/authorizer.js';

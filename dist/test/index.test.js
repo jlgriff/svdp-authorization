@@ -4,8 +4,7 @@ import * as assert from 'assert/strict';
 import { test } from 'mocha';
 import { ACCESS_LEVEL_MAPPINGS, ORGANIZATION_TYPE_MAPPINGS } from '../src/constants/role.js';
 import { encodeRoles, decodeRoles, OrganizationType, AccessLevel, hasReaderAccess, hasContributorAccess, hasApproverAccess, hasAdministratorAccess, hasSystemAccess, hasSystemAdministratorAccess, isAuthorized } from '../src/index.js';
-process.env.NODE_ENV = 'test';
-describe('Verify encodeRoles and decodeRoles', () => {
+describe('Test encodeRoles and decodeRoles', () => {
     test('A list of roles should be the same value after being encoded and decoded', () => {
         const userId = 'test_user_id';
         const organizationId1 = 1;
@@ -20,7 +19,7 @@ describe('Verify encodeRoles and decodeRoles', () => {
         assert.deepEqual(decodedRoles, roles);
     });
 });
-describe('Verify ACCESS_LEVEL_MAPPINGS validity', () => {
+describe('Test ACCESS_LEVEL_MAPPINGS validity', () => {
     test('No access level token codes exceed 1 byte', () => {
         assert.equal(ACCESS_LEVEL_MAPPINGS.every((mapping) => mapping.tokenCode.byteLength === 1), true);
     });
@@ -30,7 +29,7 @@ describe('Verify ACCESS_LEVEL_MAPPINGS validity', () => {
         assert.equal(tokenCodeNumbers.size, ACCESS_LEVEL_MAPPINGS.length);
     });
 });
-describe('Verify ORGANIZATION_TYPE_MAPPINGS validity', () => {
+describe('Test ORGANIZATION_TYPE_MAPPINGS validity', () => {
     test('No organization type token codes exceed 1 byte', () => {
         assert.equal(ORGANIZATION_TYPE_MAPPINGS.every((mapping) => mapping.tokenCode.byteLength === 1), true);
     });
@@ -72,7 +71,7 @@ const testAuthorizationFunction = (fn, matchingAccess, nonMatchingAccess, matchi
         assert.equal(fn(matchingOrgId, matchingOrgType, roles), false);
     });
 };
-describe('Verify isAuthorized', () => {
+describe('Test isAuthorized', () => {
     const organizationId = 1;
     const organizationType = OrganizationType.CONFERENCE;
     const access = AccessLevel.READER;
