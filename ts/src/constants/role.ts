@@ -7,17 +7,6 @@ export enum AccessLevel {
   SYSTEM_ADMINISTRATOR = 'system_administrator',
 }
 
-export enum OrganizationType {
-  CONFERENCE = 'conference',
-  COUNCIL = 'council',
-}
-
-export interface OrganizationTypeEncoding {
-  type: OrganizationType;
-  tokenCode: Uint8Array;
-  label: string;
-}
-
 export interface AccessLevelEncoding {
   access: AccessLevel;
   tokenCode: Uint8Array;
@@ -26,8 +15,7 @@ export interface AccessLevelEncoding {
 
 export interface Role {
   userId: string;
-  organizationId: number;
-  organizationType: OrganizationType;
+  organizationId: string;
   access: AccessLevel;
 }
 
@@ -38,9 +26,4 @@ export const ACCESS_LEVEL_MAPPINGS: AccessLevelEncoding[] = [
   { access: AccessLevel.ADMINISTRATOR, tokenCode: new Uint8Array([40]), label: AccessLevel.ADMINISTRATOR.toString() },
   { access: AccessLevel.SYSTEM, tokenCode: new Uint8Array([200]), label: AccessLevel.ADMINISTRATOR.toString() },
   { access: AccessLevel.SYSTEM_ADMINISTRATOR, tokenCode: new Uint8Array([210]), label: AccessLevel.ADMINISTRATOR.toString() },
-];
-
-export const ORGANIZATION_TYPE_MAPPINGS: OrganizationTypeEncoding[] = [
-  { type: OrganizationType.CONFERENCE, tokenCode: new Uint8Array([10]), label: OrganizationType.CONFERENCE.toString() },
-  { type: OrganizationType.COUNCIL, tokenCode: new Uint8Array([20]), label: OrganizationType.COUNCIL.toString() },
 ];

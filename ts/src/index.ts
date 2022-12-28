@@ -1,5 +1,5 @@
-export { getAccessLevelEnum, getOrganizationTypeEnum } from './utilities/enum-converter.js';
-export { Role, AccessLevel, OrganizationType } from './constants/role.js';
+export { getAccessLevelEnum } from './utilities/enum-converter.js';
+export { Role, AccessLevel } from './constants/role.js';
 export {
   encodeRoles,
   decodeRoles,

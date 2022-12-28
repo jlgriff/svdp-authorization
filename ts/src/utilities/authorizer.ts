@@ -1,32 +1,4 @@
-import {
-  Role, AccessLevel, ACCESS_LEVEL_MAPPINGS, OrganizationType, ORGANIZATION_TYPE_MAPPINGS,
-} from '../constants/role.js';
-
-/**
- * Encodes the organization type enum into a single byte
- *
- * @param organizationType - type of organization
- * @returns a single byte representing the organization type
- */
-const encodeOrganizationType = (organizationType: OrganizationType): Uint8Array => {
-  const organizationTypeCodes = ORGANIZATION_TYPE_MAPPINGS
-    .filter((mapping) => mapping.label.toLowerCase() === organizationType.toLowerCase())
-    .map((mapping) => mapping.tokenCode);
-  return organizationTypeCodes[0] || new Uint8Array([0]);
-};
-
-/**
- * Decodes the given byte code from the token into the corresponding organization type
- *
- * @param tokenCode - encoded byte for a given organization type
- * @returns an OrganizationType enum
- */
-const decodeOrganizationType = (tokenCode: Uint8Array): OrganizationType | null => {
-  const organizationTypes = ORGANIZATION_TYPE_MAPPINGS
-    .filter((mapping) => mapping.tokenCode[0] === tokenCode[0])
-    .map((mapping) => mapping.type);
-  return organizationTypes[0] || null;
-};
+import { Role, AccessLevel, ACCESS_LEVEL_MAPPINGS } from '../constants/role.js';
 
 /**
  * Encodes the given access level enum into a single byte
@@ -61,10 +33,9 @@ const decodeAccessLevel = (tokenCode: Uint8Array): AccessLevel | null => {
  * @returns an encoded string containing all of a user's roles within his organizations
  */
 export const encodeRoles = (roles: Role[]): string[] => roles.map((role) => {
-  const organizationType = encodeOrganizationType(role.organizationType);
   const { organizationId } = role;
   const accessLevel = encodeAccessLevel(role.access);
-  return `${organizationType}:${organizationId}:${accessLevel}`;
+  return `${organizationId}:${accessLevel}`;
 });
 
 /**
@@ -79,14 +50,12 @@ export const decodeRoles = (encodedRoles: string[], userId: string): Role[] => {
   encodedRoles.forEach((encodedRole) => {
     const encodedValues: string[] = encodedRole.split(':');
     try {
-      const organizationTypeCode: number = Number(encodedValues[0]);
-      const organizationType: OrganizationType | null = decodeOrganizationType(Uint8Array.from([organizationTypeCode]));
-      const organizationId: number = Number(encodedValues[1]);
-      const AccessLevelCode: number = Number(encodedValues[2]);
+      const organizationId: string = encodedValues[0];
+      const AccessLevelCode: number = Number(encodedValues[1]);
       const access: AccessLevel | null = decodeAccessLevel(Uint8Array.from([AccessLevelCode]));
-      if (organizationType && access) {
+      if (access) {
         roles.push({
-          organizationType, organizationId, userId, access,
+          organizationId, userId, access,
         });
       }
     } catch (e) {
@@ -106,11 +75,10 @@ export const decodeRoles = (encodedRoles: string[], userId: string): Role[] => {
  * @returns whether the user is authorized
  */
 export const isAuthorized = (
-  accessChecks: ((organizationId: number, organizationType: OrganizationType, userRoles: Role[]) => boolean)[],
-  organizationId: number,
-  organizationType: OrganizationType,
+  accessChecks: ((organizationId: string, userRoles: Role[]) => boolean)[],
+  organizationId: string,
   userRoles: Role[],
-): boolean => accessChecks.some((fn) => fn(organizationId, organizationType, userRoles) === true);
+): boolean => accessChecks.some((fn) => fn(organizationId, userRoles) === true);
 
 /**
  * Determines whether the user has reader access in the given organization
@@ -120,10 +88,8 @@ export const isAuthorized = (
  * @param userRoles - user's roles from their JWT token
  * @returns whether the user has reader access in the given organization
  */
-export const hasReaderAccess = (organizationId: number, organizationType: OrganizationType, userRoles: Role[]): boolean => userRoles
-  .filter((role) => role.organizationId === organizationId
-    && role.organizationType === organizationType
-    && role.access === AccessLevel.READER)
+export const hasReaderAccess = (organizationId: string, userRoles: Role[]): boolean => userRoles
+  .filter((role) => role.organizationId === organizationId && role.access === AccessLevel.READER)
   .length > 0;
 
 /**
@@ -134,10 +100,8 @@ export const hasReaderAccess = (organizationId: number, organizationType: Organi
 * @param userRoles - user's roles from their JWT token
 * @returns whether the user has contributor access in the given organization
 */
-export const hasContributorAccess = (organizationId: number, organizationType: OrganizationType, userRoles: Role[]): boolean => userRoles
-  .filter((role) => role.organizationId === organizationId
-    && role.organizationType === organizationType
-    && role.access === AccessLevel.CONTRIBUTOR)
+export const hasContributorAccess = (organizationId: string, userRoles: Role[]): boolean => userRoles
+  .filter((role) => role.organizationId === organizationId && role.access === AccessLevel.CONTRIBUTOR)
   .length > 0;
 
 /**
@@ -148,10 +112,8 @@ export const hasContributorAccess = (organizationId: number, organizationType: O
 * @param userRoles - user's roles from their JWT token
 * @returns whether the user has approver access in the given organization
 */
-export const hasApproverAccess = (organizationId: number, organizationType: OrganizationType, userRoles: Role[]): boolean => userRoles
-  .filter((role) => role.organizationId === organizationId
-    && role.organizationType === organizationType
-    && role.access === AccessLevel.APPROVER)
+export const hasApproverAccess = (organizationId: string, userRoles: Role[]): boolean => userRoles
+  .filter((role) => role.organizationId === organizationId && role.access === AccessLevel.APPROVER)
   .length > 0;
 
 /**
@@ -162,10 +124,8 @@ export const hasApproverAccess = (organizationId: number, organizationType: Orga
 * @param userRoles - user's roles from their JWT token
 * @returns whether the user has administrator access in the given organization
 */
-export const hasAdministratorAccess = (organizationId: number, organizationType: OrganizationType, userRoles: Role[]): boolean => userRoles
-  .filter((role) => role.organizationId === organizationId
-    && role.organizationType === organizationType
-    && role.access === AccessLevel.ADMINISTRATOR)
+export const hasAdministratorAccess = (organizationId: string, userRoles: Role[]): boolean => userRoles
+  .filter((role) => role.organizationId === organizationId && role.access === AccessLevel.ADMINISTRATOR)
   .length > 0;
 
 /**
@@ -176,10 +136,8 @@ export const hasAdministratorAccess = (organizationId: number, organizationType:
 * @param userRoles - user's roles from their JWT token
 * @returns whether the user has system access in the given organization
 */
-export const hasSystemAccess = (organizationId: number, organizationType: OrganizationType, userRoles: Role[]): boolean => userRoles
-  .filter((role) => role.organizationId === organizationId
-    && role.organizationType === organizationType
-    && role.access === AccessLevel.SYSTEM)
+export const hasSystemAccess = (organizationId: string, userRoles: Role[]): boolean => userRoles
+  .filter((role) => role.organizationId === organizationId && role.access === AccessLevel.SYSTEM)
   .length > 0;
 
 /**
@@ -190,8 +148,6 @@ export const hasSystemAccess = (organizationId: number, organizationType: Organi
 * @param userRoles - user's roles from their JWT token
 * @returns whether the user has system administrator access in the given organization
 */
-export const hasSystemAdministratorAccess = (organizationId: number, organizationType: OrganizationType, userRoles: Role[]): boolean => userRoles
-  .filter((role) => role.organizationId === organizationId
-    && role.organizationType === organizationType
-    && role.access === AccessLevel.SYSTEM_ADMINISTRATOR)
+export const hasSystemAdministratorAccess = (organizationId: string, userRoles: Role[]): boolean => userRoles
+  .filter((role) => role.organizationId === organizationId && role.access === AccessLevel.SYSTEM_ADMINISTRATOR)
   .length > 0;

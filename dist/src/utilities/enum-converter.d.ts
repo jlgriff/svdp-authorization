@@ -1,4 +1,4 @@
-import { AccessLevel, OrganizationType } from '../constants/role.js';
+import { AccessLevel } from '../constants/role.js';
 /**
  * Returns the AccessLevel enum with the same label as the given string
  *
@@ -6,11 +6,5 @@ import { AccessLevel, OrganizationType } from '../constants/role.js';
  * @returns an AccessLevel enum
  */
 export declare const getAccessLevelEnum: (access: string) => AccessLevel | undefined;
-/**
- * Returns the OrganizationType enum with the same label as the given string
- *
- * @param organizationType - string to match with an OrganizationType's label
- * @returns an OrganizationType enum
- */
-export declare const getOrganizationTypeEnum: (organizationType: string) => OrganizationType | undefined;
+export default getAccessLevelEnum;
 //# sourceMappingURL=enum-converter.d.ts.map

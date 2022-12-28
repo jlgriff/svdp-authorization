@@ -1,4 +1,4 @@
-import { Role, OrganizationType } from '../constants/role.js';
+import { Role } from '../constants/role.js';
 /**
  * Encodes a list of user roles into a single shortened string to better fit in JWT tokens
  *
@@ -23,7 +23,7 @@ export declare const decodeRoles: (encodedRoles: string[], userId: string) => Ro
  * @param userRoles - user's roles from their JWT token
  * @returns whether the user is authorized
  */
-export declare const isAuthorized: (accessChecks: ((organizationId: number, organizationType: OrganizationType, userRoles: Role[]) => boolean)[], organizationId: number, organizationType: OrganizationType, userRoles: Role[]) => boolean;
+export declare const isAuthorized: (accessChecks: ((organizationId: string, userRoles: Role[]) => boolean)[], organizationId: string, userRoles: Role[]) => boolean;
 /**
  * Determines whether the user has reader access in the given organization
  *
@@ -32,7 +32,7 @@ export declare const isAuthorized: (accessChecks: ((organizationId: number, orga
  * @param userRoles - user's roles from their JWT token
  * @returns whether the user has reader access in the given organization
  */
-export declare const hasReaderAccess: (organizationId: number, organizationType: OrganizationType, userRoles: Role[]) => boolean;
+export declare const hasReaderAccess: (organizationId: string, userRoles: Role[]) => boolean;
 /**
 * Determines whether the user has contributor access in the given organization
 *
@@ -41,7 +41,7 @@ export declare const hasReaderAccess: (organizationId: number, organizationType:
 * @param userRoles - user's roles from their JWT token
 * @returns whether the user has contributor access in the given organization
 */
-export declare const hasContributorAccess: (organizationId: number, organizationType: OrganizationType, userRoles: Role[]) => boolean;
+export declare const hasContributorAccess: (organizationId: string, userRoles: Role[]) => boolean;
 /**
 * Determines whether the user has approver access in the given organization
 *
@@ -50,7 +50,7 @@ export declare const hasContributorAccess: (organizationId: number, organization
 * @param userRoles - user's roles from their JWT token
 * @returns whether the user has approver access in the given organization
 */
-export declare const hasApproverAccess: (organizationId: number, organizationType: OrganizationType, userRoles: Role[]) => boolean;
+export declare const hasApproverAccess: (organizationId: string, userRoles: Role[]) => boolean;
 /**
 * Determines whether the user has administrator access in the given organization
 *
@@ -59,7 +59,7 @@ export declare const hasApproverAccess: (organizationId: number, organizationTyp
 * @param userRoles - user's roles from their JWT token
 * @returns whether the user has administrator access in the given organization
 */
-export declare const hasAdministratorAccess: (organizationId: number, organizationType: OrganizationType, userRoles: Role[]) => boolean;
+export declare const hasAdministratorAccess: (organizationId: string, userRoles: Role[]) => boolean;
 /**
 * Determines whether the user has system access in the given organization
 *
@@ -68,7 +68,7 @@ export declare const hasAdministratorAccess: (organizationId: number, organizati
 * @param userRoles - user's roles from their JWT token
 * @returns whether the user has system access in the given organization
 */
-export declare const hasSystemAccess: (organizationId: number, organizationType: OrganizationType, userRoles: Role[]) => boolean;
+export declare const hasSystemAccess: (organizationId: string, userRoles: Role[]) => boolean;
 /**
 * Determines whether the user has system administrator access in the given organization
 *
@@ -77,5 +77,5 @@ export declare const hasSystemAccess: (organizationId: number, organizationType:
 * @param userRoles - user's roles from their JWT token
 * @returns whether the user has system administrator access in the given organization
 */
-export declare const hasSystemAdministratorAccess: (organizationId: number, organizationType: OrganizationType, userRoles: Role[]) => boolean;
+export declare const hasSystemAdministratorAccess: (organizationId: string, userRoles: Role[]) => boolean;
 //# sourceMappingURL=authorizer.d.ts.map

@@ -1,6 +1,4 @@
-import {
-  AccessLevel, ACCESS_LEVEL_MAPPINGS, OrganizationType, ORGANIZATION_TYPE_MAPPINGS,
-} from '../constants/role.js';
+import { AccessLevel, ACCESS_LEVEL_MAPPINGS } from '../constants/role.js';
 
 /**
  * Returns the AccessLevel enum with the same label as the given string
@@ -12,12 +10,4 @@ export const getAccessLevelEnum = (access: string): AccessLevel | undefined => A
   .find((mapping) => access.toLowerCase() === mapping.label.toLowerCase())
   ?.access;
 
-/**
- * Returns the OrganizationType enum with the same label as the given string
- *
- * @param organizationType - string to match with an OrganizationType's label
- * @returns an OrganizationType enum
- */
-export const getOrganizationTypeEnum = (organizationType: string): OrganizationType | undefined => ORGANIZATION_TYPE_MAPPINGS
-  .find((mapping) => organizationType.toLowerCase() === mapping.label.toLowerCase())
-  ?.type;
+export default getAccessLevelEnum;
