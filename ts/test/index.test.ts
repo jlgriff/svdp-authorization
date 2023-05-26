@@ -137,14 +137,30 @@ describe('Verify hasSystemAccess', () => {
   const fn = hasSystemAccess;
   const matchingAccess = AccessLevel.SYSTEM;
   const nonMatchingAccess = AccessLevel.READER;
+  const userId = 'test_user_id';
+  const matchingOrgId = '1';
 
-  testAuthorizationFunction(fn, matchingAccess, nonMatchingAccess);
+  test(`A list of roles containing a ${matchingAccess.toString()} in an organization should return true`, () => {
+    const roles: Role[] = [
+      { userId, organizationId: matchingOrgId, access: matchingAccess },
+      { userId, organizationId: matchingOrgId, access: nonMatchingAccess },
+    ];
+    assert.equal(fn(roles), true);
+  });
 });
 
 describe('Verify hasSystemAdministratorAccess', () => {
   const fn = hasSystemAdministratorAccess;
   const matchingAccess = AccessLevel.SYSTEM_ADMINISTRATOR;
   const nonMatchingAccess = AccessLevel.READER;
+  const userId = 'test_user_id';
+  const matchingOrgId = '1';
 
-  testAuthorizationFunction(fn, matchingAccess, nonMatchingAccess);
+  test(`A list of roles containing a ${matchingAccess.toString()} in an organization should return true`, () => {
+    const roles: Role[] = [
+      { userId, organizationId: matchingOrgId, access: matchingAccess },
+      { userId, organizationId: matchingOrgId, access: nonMatchingAccess },
+    ];
+    assert.equal(fn(roles), true);
+  });
 });

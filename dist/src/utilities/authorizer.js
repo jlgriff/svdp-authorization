@@ -123,8 +123,8 @@ export const hasAdministratorAccess = (organizationId, userRoles) => userRoles
 * @param userRoles - user's roles from their JWT token
 * @returns whether the user has system access in the given organization
 */
-export const hasSystemAccess = (organizationId, userRoles) => userRoles
-    .filter((role) => role.organizationId === organizationId && role.access === AccessLevel.SYSTEM)
+export const hasSystemAccess = (userRoles) => userRoles
+    .filter((role) => role.access === AccessLevel.SYSTEM)
     .length > 0;
 /**
 * Determines whether the user has system administrator access in the given organization
@@ -134,7 +134,7 @@ export const hasSystemAccess = (organizationId, userRoles) => userRoles
 * @param userRoles - user's roles from their JWT token
 * @returns whether the user has system administrator access in the given organization
 */
-export const hasSystemAdministratorAccess = (organizationId, userRoles) => userRoles
-    .filter((role) => role.organizationId === organizationId && role.access === AccessLevel.SYSTEM_ADMINISTRATOR)
+export const hasSystemAdministratorAccess = (userRoles) => userRoles
+    .filter((role) => role.access === AccessLevel.SYSTEM_ADMINISTRATOR)
     .length > 0;
 //# sourceMappingURL=authorizer.js.map

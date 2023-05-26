@@ -136,8 +136,8 @@ export const hasAdministratorAccess = (organizationId: string, userRoles: Role[]
 * @param userRoles - user's roles from their JWT token
 * @returns whether the user has system access in the given organization
 */
-export const hasSystemAccess = (organizationId: string, userRoles: Role[]): boolean => userRoles
-  .filter((role) => role.organizationId === organizationId && role.access === AccessLevel.SYSTEM)
+export const hasSystemAccess = (userRoles: Role[]): boolean => userRoles
+  .filter((role) => role.access === AccessLevel.SYSTEM)
   .length > 0;
 
 /**
@@ -148,6 +148,6 @@ export const hasSystemAccess = (organizationId: string, userRoles: Role[]): bool
 * @param userRoles - user's roles from their JWT token
 * @returns whether the user has system administrator access in the given organization
 */
-export const hasSystemAdministratorAccess = (organizationId: string, userRoles: Role[]): boolean => userRoles
-  .filter((role) => role.organizationId === organizationId && role.access === AccessLevel.SYSTEM_ADMINISTRATOR)
+export const hasSystemAdministratorAccess = (userRoles: Role[]): boolean => userRoles
+  .filter((role) => role.access === AccessLevel.SYSTEM_ADMINISTRATOR)
   .length > 0;

@@ -68,7 +68,7 @@ export declare const hasAdministratorAccess: (organizationId: string, userRoles:
 * @param userRoles - user's roles from their JWT token
 * @returns whether the user has system access in the given organization
 */
-export declare const hasSystemAccess: (organizationId: string, userRoles: Role[]) => boolean;
+export declare const hasSystemAccess: (userRoles: Role[]) => boolean;
 /**
 * Determines whether the user has system administrator access in the given organization
 *
@@ -77,5 +77,5 @@ export declare const hasSystemAccess: (organizationId: string, userRoles: Role[]
 * @param userRoles - user's roles from their JWT token
 * @returns whether the user has system administrator access in the given organization
 */
-export declare const hasSystemAdministratorAccess: (organizationId: string, userRoles: Role[]) => boolean;
+export declare const hasSystemAdministratorAccess: (userRoles: Role[]) => boolean;
 //# sourceMappingURL=authorizer.d.ts.map
